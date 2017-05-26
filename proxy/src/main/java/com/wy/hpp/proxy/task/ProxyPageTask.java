@@ -1,14 +1,14 @@
 package com.wy.hpp.proxy.task;
 
-import com.wy.hpp.entity.Page;
-import com.wy.hpp.parser.ListPageParser;
+import com.wy.hpp.http.entity.Page;
+import com.wy.hpp.proxy.entity.Proxy;
+import com.wy.hpp.http.parser.ListPageParser;
 import com.wy.hpp.proxy.ProxyHttpClient;
 import com.wy.hpp.proxy.ProxyPool;
 import com.wy.hpp.proxy.entity.Direct;
-import com.wy.hpp.proxy.entity.Proxy;
 import com.wy.hpp.proxy.site.ProxyListPageParserFactory;
 import com.wy.hpp.proxy.util.Constants;
-import com.wy.hpp.util.HttpClientUtil;
+import com.wy.hpp.http.util.HttpClientUtil;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;

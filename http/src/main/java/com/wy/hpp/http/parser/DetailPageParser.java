@@ -1,7 +1,7 @@
-package com.wy.hpp.parser;
+package com.wy.hpp.http.parser;
 
 
-import com.wy.hpp.entity.Page;
+import com.wy.hpp.http.entity.Page;
 
 public interface DetailPageParser<T> extends Parser {
     T parseDetailPage(Page page);

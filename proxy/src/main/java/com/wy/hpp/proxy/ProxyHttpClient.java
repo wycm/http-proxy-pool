@@ -1,20 +1,15 @@
 package com.wy.hpp.proxy;
 
-import com.wy.hpp.entity.Page;
-import com.wy.hpp.httpclient.AbstractHttpClient;
 import com.wy.hpp.proxy.entity.Proxy;
 import com.wy.hpp.proxy.task.ProxyPageTask;
-import com.wy.hpp.proxy.task.ProxySerializeTask;
-import com.wy.hpp.proxy.util.Constants;
 import com.wy.hpp.proxy.util.Config;
+import com.wy.hpp.http.util.SimpleThreadPoolExecutor;
+import com.wy.hpp.http.util.ThreadPoolMonitor;
+import com.wy.hpp.http.httpclient.AbstractHttpClient;
+import com.wy.hpp.proxy.task.ProxySerializeTask;
 import com.wy.hpp.proxy.util.ProxyUtil;
-import com.wy.hpp.util.HttpClientUtil;
-import com.wy.hpp.util.SimpleThreadPoolExecutor;
-import com.wy.hpp.util.ThreadPoolMonitor;
 import org.apache.log4j.Logger;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -75,16 +70,6 @@ public class ProxyHttpClient extends AbstractHttpClient {
             for (Proxy p : proxyArray){
                 if (p == null){
                     continue;
-                }
-                p.setTimeInterval(Constants.TIME_INTERVAL);
-                p.setFailureTimes(0);
-                p.setSuccessfulTimes(0);
-                long nowTime = System.currentTimeMillis();
-                if (nowTime - p.getLastSuccessfulTime() < 1000 * 60 *60){
-                    //上次成功离现在少于一小时
-                    ProxyPool.proxyQueue.add(p);
-                    ProxyPool.proxySet.add(p);
-                    usableProxyCount++;
                 }
             }
             logger.info("反序列化proxy成功，" + proxyArray.length + "个代理,可用代理" + usableProxyCount + "个");

@@ -1,7 +1,7 @@
 package com.wy.hpp.proxy.site;
 
 
-import com.wy.hpp.parser.ListPageParser;
+import com.wy.hpp.http.parser.ListPageParser;
 import com.wy.hpp.proxy.entity.Proxy;
 
 import java.util.HashMap;

@@ -1,20 +1,16 @@
 package com.wy.hpp.proxy.site.ip181;
 
 
-import com.wy.hpp.entity.Page;
-import com.wy.hpp.parser.ListPageParser;
+import com.wy.hpp.http.entity.Page;
+import com.wy.hpp.http.parser.ListPageParser;
 import com.wy.hpp.proxy.entity.Proxy;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.wy.hpp.proxy.util.Constants.TIME_INTERVAL;
 
 public class Ip181ProxyListPageParser implements ListPageParser<Proxy> {
 

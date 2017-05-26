@@ -1,4 +1,4 @@
-package com.wy.hpp.util;
+package com.wy.hpp.http.util;
 
 import org.apache.http.*;
 import org.apache.http.client.CookieStore;
@@ -32,11 +32,8 @@ import org.apache.log4j.Logger;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
 import java.io.*;
-import java.net.URL;
 import java.net.UnknownHostException;
 import java.nio.charset.CodingErrorAction;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.security.KeyStore;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;

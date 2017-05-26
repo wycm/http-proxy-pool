@@ -1,6 +1,6 @@
-package com.wy.hpp.site;
+package com.wy.hpp.http.site;
 
-import com.wy.hpp.entity.Page;
+import com.wy.hpp.http.entity.Page;
 import com.wy.hpp.proxy.ProxyHttpClient;
 import com.wy.hpp.proxy.entity.Proxy;
 import com.wy.hpp.proxy.site.ip181.Ip181ProxyListPageParser;

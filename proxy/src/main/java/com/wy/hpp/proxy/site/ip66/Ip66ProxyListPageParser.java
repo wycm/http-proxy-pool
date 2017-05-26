@@ -1,9 +1,9 @@
 package com.wy.hpp.proxy.site.ip66;
 
 
-import com.wy.hpp.entity.Page;
-import com.wy.hpp.parser.ListPageParser;
+import com.wy.hpp.http.entity.Page;
 import com.wy.hpp.proxy.entity.Proxy;
+import com.wy.hpp.http.parser.ListPageParser;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,8 +11,6 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.wy.hpp.proxy.util.Constants.TIME_INTERVAL;
 
 
 /**

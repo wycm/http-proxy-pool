@@ -1,11 +1,10 @@
 package com.wy.hpp.proxy.task;
 
-import com.wy.hpp.entity.Page;
-import com.wy.hpp.httpclient.AbstractHttpClient;
-import com.wy.hpp.proxy.ProxyPool;
+import com.wy.hpp.http.entity.Page;
 import com.wy.hpp.proxy.entity.Proxy;
-import com.wy.hpp.proxy.util.Config;
-import com.wy.hpp.util.Constants;
+import com.wy.hpp.http.httpclient.AbstractHttpClient;
+import com.wy.hpp.proxy.ProxyPool;
+import com.wy.hpp.http.util.Constants;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;

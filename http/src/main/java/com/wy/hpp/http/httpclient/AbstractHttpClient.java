@@ -1,8 +1,7 @@
-package com.wy.hpp.httpclient;
+package com.wy.hpp.http.httpclient;
 
-import com.wy.hpp.entity.Page;
-import com.wy.hpp.util.HttpClientUtil;
-import org.apache.http.client.CookieStore;
+import com.wy.hpp.http.entity.Page;
+import com.wy.hpp.http.util.HttpClientUtil;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.util.EntityUtils;

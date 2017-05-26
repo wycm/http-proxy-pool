@@ -1,4 +1,4 @@
-package com.wy.hpp.util;
+package com.wy.hpp.http.util;
 
 import org.apache.log4j.Logger;
 

@@ -1,4 +1,4 @@
-package com.wy.hpp.entity;
+package com.wy.hpp.http.entity;
 
 
 

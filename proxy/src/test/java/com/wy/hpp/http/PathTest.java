@@ -1,4 +1,4 @@
-package com.wy.hpp;
+package com.wy.hpp.http;
 
 import org.junit.Test;
 

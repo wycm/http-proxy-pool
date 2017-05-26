@@ -2,9 +2,8 @@ package com.wy.hpp.proxy.task;
 
 import com.wy.hpp.proxy.ProxyPool;
 import com.wy.hpp.proxy.entity.Proxy;
-import com.wy.hpp.proxy.util.ProxyUtil;
 import com.wy.hpp.proxy.util.Config;
-import com.wy.hpp.util.HttpClientUtil;
+import com.wy.hpp.proxy.util.ProxyUtil;
 import org.apache.log4j.Logger;
 
 import java.io.FileNotFoundException;

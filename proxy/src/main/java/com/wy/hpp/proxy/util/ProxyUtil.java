@@ -2,7 +2,6 @@ package com.wy.hpp.proxy.util;
 
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.wy.hpp.proxy.entity.Proxy;
 
 import java.io.*;
