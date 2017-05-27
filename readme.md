@@ -18,7 +18,9 @@ Run with [Main.java](https://github.com/wycm/http-proxy-pool/blob/master/proxy/s
 | 参数名 |类型 | 必填 | 值 | 说明|
 | :------------ | :------------ | :------------ | :----- | :------------ |
 | protocol | String | 否| http、https | 协议 |
-| anonymous  | String  否  | 是| 透明、普匿、高匿 | 是否匿名 |
+| anonymous  | String | 否  | 透明、普匿、高匿 | 是否匿名 |
+
+* eg:```http://localhost:8080/http-proxy-pool?protocol=https&anonymous=匿名```
 
 ## TODO
 * 增加代理
