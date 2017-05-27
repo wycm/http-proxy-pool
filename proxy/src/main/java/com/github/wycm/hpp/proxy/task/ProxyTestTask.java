@@ -25,7 +25,7 @@ public class ProxyTestTask implements Runnable{
     public ProxyTestTask(Proxy proxy, AbstractHttpClient httpClient, String url){
         this.proxy = proxy;
         this.httpClient = httpClient;
-        url = this.url;
+        this.url = url;
     }
     @Override
     public void run() {
@@ -54,7 +54,7 @@ public class ProxyTestTask implements Runnable{
                 return;
             }
             request.releaseConnection();
-            proxy.setCostTime(endTime - startTime);
+            proxy.setBaiduResTime(endTime - startTime);
             logger.debug(proxy.toString() + "---------" + page.toString());
             if(!ProxyPool.proxySet.contains(proxy)){
                 logger.debug(proxy.toString() + "----------代理可用--------请求耗时:" + (endTime - startTime) + "ms");

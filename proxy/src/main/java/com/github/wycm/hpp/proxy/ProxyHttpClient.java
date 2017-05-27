@@ -1,6 +1,7 @@
 package com.github.wycm.hpp.proxy;
 
 import com.github.wycm.hpp.proxy.entity.Proxy;
+import com.github.wycm.hpp.proxy.site.DefaultParserTemplate;
 import com.github.wycm.hpp.proxy.task.ProxyPageTask;
 import com.github.wycm.hpp.proxy.task.ProxySerializeTask;
 import com.github.wycm.hpp.proxy.util.Config;
@@ -10,6 +11,8 @@ import com.github.wycm.hpp.http.httpclient.AbstractHttpClient;
 import com.github.wycm.hpp.proxy.util.ProxyUtil;
 import org.apache.log4j.Logger;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -32,10 +35,8 @@ public class ProxyHttpClient extends AbstractHttpClient {
      * 代理测试线程池
      */
     private ThreadPoolExecutor proxyTestThreadExecutor;
-    /**
-     * 代理网站下载线程池
-     */
-    private ThreadPoolExecutor proxyDownloadThreadExecutor;
+
+    private Map<String, SimpleThreadPoolExecutor> threadPoolExecutorMap = new HashMap<>();
     public ProxyHttpClient(){
         initThreadPool();
         initProxy();
@@ -44,22 +45,23 @@ public class ProxyHttpClient extends AbstractHttpClient {
      * 初始化线程池
      */
     private void initThreadPool(){
-        proxyTestThreadExecutor = new SimpleThreadPoolExecutor(100, 100,
+        proxyTestThreadExecutor = new SimpleThreadPoolExecutor(300, 300,
                 0L, TimeUnit.MILLISECONDS,
                 new LinkedBlockingQueue<Runnable>(10000),
                 new ThreadPoolExecutor.DiscardPolicy(),
                 "proxyTestThreadExecutor");
-        proxyDownloadThreadExecutor = new SimpleThreadPoolExecutor(5, 10,
-                0L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<Runnable>(10000), "" +
-                "proxyDownloadThreadExecutor");
+        for(DefaultParserTemplate template : ProxyPool.defalutParserTemplateList){
+            threadPoolExecutorMap.put(template.getDomain()
+                    ,new SimpleThreadPoolExecutor(1, 2,
+                            0L, TimeUnit.MILLISECONDS,
+                            new LinkedBlockingQueue<Runnable>(1000), template.getDomain() +
+                            "-ProxyDownloadThreadExecutor"));
+        }
         new Thread(new ThreadPoolMonitor(proxyTestThreadExecutor, "ProxyTestThreadPool")).start();
-        new Thread(new ThreadPoolMonitor(proxyDownloadThreadExecutor, "ProxyDownloadThreadExecutor")).start();
     }
 
     /**
      * 初始化proxy
-     *
      */
     private void initProxy(){
         Proxy[] proxyArray = null;
@@ -85,19 +87,10 @@ public class ProxyHttpClient extends AbstractHttpClient {
             @Override
             public void run() {
                 while (true){
-                    for (String url : ProxyPool.proxyMap.keySet()){
-                        /**
-                         * 首次本机直接下载代理页面
-                         */
-                        if(url.startsWith("http://www.ip181.com/daili")){
-                            proxyDownloadThreadExecutor.execute(new ProxyPageTask(url, false, "gb2312"));
-                        } else {
-                            proxyDownloadThreadExecutor.execute(new ProxyPageTask(url, false));
-                        }
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                    for(DefaultParserTemplate template : ProxyPool.defalutParserTemplateList){
+                        for(String url : template.getUrlList()) {
+                            threadPoolExecutorMap.get(template.getDomain())
+                                    .execute(new ProxyPageTask(template.getDomain(), url, false, template.getCharsetName()));
                         }
                     }
                     try {
@@ -114,7 +107,7 @@ public class ProxyHttpClient extends AbstractHttpClient {
         return proxyTestThreadExecutor;
     }
 
-    public ThreadPoolExecutor getProxyDownloadThreadExecutor() {
-        return proxyDownloadThreadExecutor;
+    public Map<String, SimpleThreadPoolExecutor> getThreadPoolExecutorMap() {
+        return threadPoolExecutorMap;
     }
 }

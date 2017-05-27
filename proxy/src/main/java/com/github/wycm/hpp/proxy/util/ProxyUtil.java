@@ -2,14 +2,23 @@ package com.github.wycm.hpp.proxy.util;
 
 
 import com.alibaba.fastjson.JSON;
+import com.github.wycm.hpp.http.entity.Page;
+import com.github.wycm.hpp.http.util.*;
+import com.github.wycm.hpp.proxy.ProxyHttpClient;
 import com.github.wycm.hpp.proxy.entity.Proxy;
+import org.apache.http.HttpHost;
+import org.apache.http.client.config.CookieSpecs;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpGet;
 
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ProxyUtil {
     /**
      * 是否丢弃代理
-     * 失败次数大于３，且失败率超过60%，丢弃
+     * 失败次数大于3，且失败率超过60%，丢弃
      */
     public static boolean isDiscardProxy(Proxy proxy){
         int succTimes = proxy.getSuccessfulTimes();
@@ -33,6 +42,29 @@ public class ProxyUtil {
         FileInputStream fis = new FileInputStream(file);
         Proxy[] proxyArray = JSON.parseObject(fis, new Proxy[0].getClass());
         return proxyArray;
+    }
+    public static boolean isAnonymous(Proxy proxy) throws IOException {
+
+        HttpGet request = new HttpGet("http://1212.ip138.com/ic.asp");
+        RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(com.github.wycm.hpp.http.util.Constants.TIMEOUT).
+                setConnectTimeout(com.github.wycm.hpp.http.util.Constants.TIMEOUT).
+                setConnectionRequestTimeout(com.github.wycm.hpp.http.util.Constants.TIMEOUT).
+                setProxy(new HttpHost(proxy.getIp(), proxy.getPort())).
+                setCookieSpec(CookieSpecs.STANDARD).
+                build();
+        request.setConfig(requestConfig);
+        Page page = ProxyHttpClient.getInstance().getWebPage(request, "gb2312");
+        System.out.println(page.getHtml());
+        Pattern pattern = Pattern.compile("您的IP是：\\[(.*?)\\] 来自：(.*?)\\<");
+        Matcher matcher = pattern.matcher(page.getHtml());
+        if (matcher.find()){
+            String ip = matcher.group(1);
+            String location = matcher.group(2);
+            if (proxy.getIp().equals(ip)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) throws FileNotFoundException {

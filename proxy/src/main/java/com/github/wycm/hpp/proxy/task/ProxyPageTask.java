@@ -31,15 +31,18 @@ public class ProxyPageTask implements Runnable{
 	private boolean proxyFlag;//是否通过代理下载
 	private Proxy currentProxy;//当前线程使用的代理
 	private String pageCharset = "utf-8";
+	private String domain;
 	protected static ProxyHttpClient proxyHttpClient = ProxyHttpClient.getInstance();
 	private ProxyPageTask(){
 
 	}
-	public ProxyPageTask(String url, boolean proxyFlag){
+	public ProxyPageTask(String domain, String url, boolean proxyFlag){
+		this.domain = domain;
 		this.url = url;
 		this.proxyFlag = proxyFlag;
 	}
-	public ProxyPageTask(String url, boolean proxyFlag, String pageCharset){
+	public ProxyPageTask(String domain, String url, boolean proxyFlag, String pageCharset){
+		this.domain = domain;
 		this.url = url;
 		this.proxyFlag = proxyFlag;
 		this.pageCharset = pageCharset;
@@ -92,7 +95,8 @@ public class ProxyPageTask implements Runnable{
 	 * retry
 	 */
 	public void retry(){
-		proxyHttpClient.getProxyDownloadThreadExecutor().execute(new ProxyPageTask(url, true, pageCharset));
+		proxyHttpClient.getThreadPoolExecutorMap().get(domain)
+				.execute(new ProxyPageTask(domain, url, true, pageCharset));
 	}
 
 	public void handle(Page page){
