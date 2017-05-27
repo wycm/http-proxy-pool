@@ -9,6 +9,7 @@ import java.util.List;
 public class DefaultParserTemplate {
     private String templateId;
     private String domain;//域名
+    private List<UrlTemplate> urlTemplateList;
     private List<String> urlList = new ArrayList<>();//url
     private String charsetName = "utf-8";
 
@@ -17,7 +18,15 @@ public class DefaultParserTemplate {
     private String portCssQuery;
     private String anonymousCssQuery;
     private String typeCssQuery;
+    private String locationCssQuery;
 
+    public List<UrlTemplate> getUrlTemplateList() {
+        return urlTemplateList;
+    }
+
+    public void setUrlTemplateList(List<UrlTemplate> urlTemplateList) {
+        this.urlTemplateList = urlTemplateList;
+    }
 
     public String getDomain() {
         return domain;
@@ -89,5 +98,13 @@ public class DefaultParserTemplate {
 
     public void setCharsetName(String charsetName) {
         this.charsetName = charsetName;
+    }
+
+    public String getLocationCssQuery() {
+        return locationCssQuery;
+    }
+
+    public void setLocationCssQuery(String locationCssQuery) {
+        this.locationCssQuery = locationCssQuery;
     }
 }

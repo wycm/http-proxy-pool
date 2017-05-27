@@ -46,7 +46,7 @@ public class ProxyPool {
         defalutParserTemplateList.add(mimiipTemplate);
 
         DefaultParserTemplate _66ipTemplate = new DefaultParserTemplate();
-        _66ipTemplate.setDomain("66ip.com");
+        _66ipTemplate.setDomain("66ip.cn");
         _66ipTemplate.setCharsetName("gb2312");
         defalutParserTemplateList.add(_66ipTemplate);
 
