@@ -1,7 +1,6 @@
 package com.github.wycm.hpp.proxy;
 
 import com.alibaba.fastjson.JSON;
-import com.github.wycm.hpp.http.util.HttpClientUtil;
 import com.github.wycm.hpp.proxy.entity.Proxy;
 import com.github.wycm.hpp.proxy.site.DefaultParserTemplate;
 import com.github.wycm.hpp.proxy.site.UrlTemplate;
@@ -12,12 +11,12 @@ import com.github.wycm.hpp.http.util.SimpleThreadPoolExecutor;
 import com.github.wycm.hpp.http.util.ThreadPoolMonitor;
 import com.github.wycm.hpp.http.httpclient.AbstractHttpClient;
 import com.github.wycm.hpp.proxy.util.ProxyUtil;
-import org.apache.log4j.Logger;
 import org.jsoup.helper.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -25,7 +24,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class ProxyHttpClient extends AbstractHttpClient {
-    private static final Logger logger = Logger.getLogger(ProxyHttpClient.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProxyHttpClient.class);
     private volatile static ProxyHttpClient instance;
 
     public static ProxyHttpClient getInstance(){
@@ -59,9 +58,11 @@ public class ProxyHttpClient extends AbstractHttpClient {
      * 初始化线程池
      */
     private void initThreadPool(){
-        proxyTestThreadExecutor = new SimpleThreadPoolExecutor(300, 300,
+        proxyTestThreadExecutor = new SimpleThreadPoolExecutor(
+                Integer.valueOf(Config.getProperty("proxyTestCorePoolSize"))
+                ,Integer.valueOf(Config.getProperty("proxyTestMaxPoolSize")),
                 0L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<Runnable>(10000),
+                new LinkedBlockingQueue<Runnable>(Integer.valueOf(Config.getProperty("proxyTestQueueSize"))),
                 new ThreadPoolExecutor.DiscardPolicy(),
                 "proxyTestThreadExecutor");
         for(DefaultParserTemplate template : ProxyPool.defalutParserTemplateList){

@@ -12,7 +12,7 @@ import com.github.wycm.hpp.http.util.HttpClientUtil;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,7 +26,8 @@ import static com.github.wycm.hpp.proxy.util.Constants.PROXY_TEST_URL;
  * 若下载失败，通过代理去下载代理网页
  */
 public class ProxyPageTask implements Runnable{
-	private static Logger logger = Logger.getLogger(ProxyPageTask.class);
+	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ProxySerializeTask.class);
+
 	protected String url;
 	private boolean proxyFlag;//是否通过代理下载
 	private Proxy currentProxy;//当前线程使用的代理

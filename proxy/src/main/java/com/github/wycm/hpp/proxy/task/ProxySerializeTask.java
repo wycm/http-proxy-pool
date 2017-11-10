@@ -4,7 +4,8 @@ import com.github.wycm.hpp.proxy.ProxyPool;
 import com.github.wycm.hpp.proxy.entity.Proxy;
 import com.github.wycm.hpp.proxy.util.Config;
 import com.github.wycm.hpp.proxy.util.ProxyUtil;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 
@@ -12,7 +13,7 @@ import java.io.FileNotFoundException;
  * 代理序列化
  */
 public class ProxySerializeTask implements Runnable{
-    private static Logger logger = Logger.getLogger(ProxySerializeTask.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProxySerializeTask.class);
     @Override
     public void run() {
         while (true){

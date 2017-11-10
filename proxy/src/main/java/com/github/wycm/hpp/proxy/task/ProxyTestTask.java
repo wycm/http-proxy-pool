@@ -5,11 +5,13 @@ import com.github.wycm.hpp.proxy.entity.Proxy;
 import com.github.wycm.hpp.http.httpclient.AbstractHttpClient;
 import com.github.wycm.hpp.proxy.ProxyPool;
 import com.github.wycm.hpp.http.util.Constants;
+import com.github.wycm.hpp.proxy.util.Config;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -18,7 +20,7 @@ import java.io.IOException;
  * 将可用代理添加到DelayQueue延时队列中
  */
 public class ProxyTestTask implements Runnable{
-    private final static Logger logger = Logger.getLogger(ProxyTestTask.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProxyTestTask.class);
     private Proxy proxy;
     private AbstractHttpClient httpClient;
     private String url;
@@ -32,9 +34,9 @@ public class ProxyTestTask implements Runnable{
         long startTime = System.currentTimeMillis();
         HttpGet request = null;
         if (proxy.getType() != null && proxy.getType().toLowerCase().contains("https")){
-            request = new HttpGet("https://www.baidu.com");
+            request = new HttpGet(Config.getProperty("httpsProxyTestUrl"));
         } else {
-            request = new HttpGet("http://www.baidu.com");
+            request = new HttpGet(Config.getProperty("httpProxyTestUrl"));
         }
         try {
             RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(Constants.TIMEOUT).
