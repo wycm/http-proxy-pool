@@ -56,7 +56,7 @@ public class ProxyTestTask implements Runnable{
                 return;
             }
             request.releaseConnection();
-            proxy.setBaiduResTime(endTime - startTime);
+            proxy.setResponseTime(endTime - startTime);
             logger.debug(proxy.toString() + "---------" + page.toString());
             if(!ProxyPool.proxySet.contains(proxy)){
                 logger.debug(proxy.toString() + "----------代理可用--------请求耗时:" + (endTime - startTime) + "ms");

@@ -67,7 +67,7 @@ public class HttpRequestHandler implements HttpHandler{
         Collections.sort(newProxyList, new Comparator<Proxy>() {
             @Override
             public int compare(Proxy o1, Proxy o2) {
-                return (int) (o1.getBaiduResTime() - o2.getBaiduResTime());
+                return (int) (o1.getResponseTime() - o2.getResponseTime());
             }
         });
         return newProxyList;

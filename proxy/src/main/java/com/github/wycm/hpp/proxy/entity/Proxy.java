@@ -13,7 +13,7 @@ public class Proxy implements Delayed, Serializable{
     private String type;
     private String location;
     private String anonymous;
-    private long baiduResTime;
+    private long responseTime;//代理测试响应时间
 
     private boolean availableFlag;
     private boolean anonymousFlag;
@@ -191,11 +191,11 @@ public class Proxy implements Delayed, Serializable{
         return ip + ":" + port;
     }
 
-    public long getBaiduResTime() {
-        return baiduResTime;
+    public long getResponseTime() {
+        return responseTime;
     }
 
-    public void setBaiduResTime(long baiduResTime) {
-        this.baiduResTime = baiduResTime;
+    public void setResponseTime(long responseTime) {
+        this.responseTime = responseTime;
     }
 }
