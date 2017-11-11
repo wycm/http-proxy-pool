@@ -33,6 +33,10 @@ public class ProxyTestTask implements Runnable{
     public void run() {
         long startTime = System.currentTimeMillis();
         HttpGet request = null;
+        if (!proxy.getAnonymous().contains("匿")){
+            //丢弃透明代理
+            return;
+        }
         if (proxy.getType() != null && proxy.getType().toLowerCase().contains("https")){
             request = new HttpGet(Config.getProperty("httpsProxyTestUrl"));
         } else {
@@ -58,7 +62,10 @@ public class ProxyTestTask implements Runnable{
             request.releaseConnection();
             proxy.setResponseTime(endTime - startTime);
             logger.debug(proxy.toString() + "---------" + page.toString());
-            if(!ProxyPool.proxySet.contains(proxy)){
+            if(!ProxyPool.proxySet.contains(proxy)
+                    && proxy.getAnonymous().contains("匿")//匿名
+                    && proxy.getResponseTime() >= 5000//超过5s丢弃
+                    ){
                 logger.debug(proxy.toString() + "----------代理可用--------请求耗时:" + (endTime - startTime) + "ms");
                 ProxyPool.lock.writeLock().lock();
                 try {

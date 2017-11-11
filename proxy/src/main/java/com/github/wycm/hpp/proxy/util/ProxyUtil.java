@@ -21,11 +21,14 @@ public class ProxyUtil {
      * 失败次数大于3，且失败率超过60%，丢弃
      */
     public static boolean isDiscardProxy(Proxy proxy){
+        if (proxy.getSuccessfulAverageTime() >= 5000){
+            return true;
+        }
         int succTimes = proxy.getSuccessfulTimes();
         int failTimes = proxy.getFailureTimes();
         if(failTimes >= 3){
             double failRate = (failTimes + 0.0) / (succTimes + failTimes);
-            if (failRate > 0.6){
+            if (failRate > 0.1){
                 return true;
             }
         }
@@ -39,8 +42,10 @@ public class ProxyUtil {
 
     public static Proxy[] deserializeObject(String filePath) throws IOException {
         File file = new File(filePath);
-        FileInputStream fis = new FileInputStream(file);
-        Proxy[] proxyArray = JSON.parseObject(fis, new Proxy[0].getClass());
+//        FileInputStream fis = new FileInputStream(file);
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream is = classLoader.getResourceAsStream(filePath);
+        Proxy[] proxyArray = JSON.parseObject(is, new Proxy[0].getClass());
         return proxyArray;
     }
     public static boolean isAnonymous(Proxy proxy) throws IOException {

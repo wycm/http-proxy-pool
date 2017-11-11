@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -94,10 +95,12 @@ public class ProxyHttpClient extends AbstractHttpClient {
         }
     }
     private void initParser() throws IOException {
-        File file = new File(Config.getProperty("defaultParserPath"));
-        FileInputStream fis = null;
-        fis = new FileInputStream(file);
-        defaultParserTemplateArray = JSON.parseObject(fis, new DefaultParserTemplate[0].getClass());
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream is = classLoader.getResourceAsStream(Config.getProperty("defaultParserPath"));
+//        File file = new File(Config.getProperty("defaultParserPath"));
+//        FileInputStream fis = null;
+//        fis = new FileInputStream(file);
+        defaultParserTemplateArray = JSON.parseObject(is, new DefaultParserTemplate[0].getClass());
         for(DefaultParserTemplate template : defaultParserTemplateArray){
             List<UrlTemplate> urlTemplateList = template.getUrlTemplateList();
             List<String> urlList = new LinkedList<>();
