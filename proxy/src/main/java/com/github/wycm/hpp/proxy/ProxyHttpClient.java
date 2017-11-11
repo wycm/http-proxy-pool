@@ -88,6 +88,11 @@ public class ProxyHttpClient extends AbstractHttpClient {
                 if (p == null){
                     continue;
                 }
+                long time = System.currentTimeMillis();
+                if (time - p.getLastSuccessfulTime() < (1000 * 60 * 10)){
+                    usableProxyCount++;
+                    ProxyPool.proxyQueue.add(p);
+                }
             }
             logger.info("反序列化proxy成功，" + proxyArray.length + "个代理,可用代理" + usableProxyCount + "个");
         } catch (Exception e) {
