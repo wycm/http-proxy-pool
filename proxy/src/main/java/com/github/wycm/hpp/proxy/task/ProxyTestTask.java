@@ -33,7 +33,7 @@ public class ProxyTestTask implements Runnable{
     public void run() {
         int size = ProxyPool.proxyQueue.size();
         int count = Integer.valueOf(Config.getProperty("proxyNumberThreshold"));
-        if (size >= 10){
+        if (size >= count){
             logger.info("当前可用代理{}个,暂时不下载代理页面", size);
             return;
         }
