@@ -5,7 +5,6 @@ import com.github.wycm.hpp.proxy.entity.Proxy;
 import com.github.wycm.hpp.proxy.site.DefaultParserTemplate;
 import com.github.wycm.hpp.proxy.site.UrlTemplate;
 import com.github.wycm.hpp.proxy.task.ProxyPageTask;
-import com.github.wycm.hpp.proxy.task.ProxySerializeTask;
 import com.github.wycm.hpp.proxy.util.Config;
 import com.github.wycm.hpp.http.util.SimpleThreadPoolExecutor;
 import com.github.wycm.hpp.http.util.ThreadPoolMonitor;
@@ -176,7 +175,7 @@ public class ProxyHttpClient extends AbstractHttpClient {
                 }
             }
         }).start();
-        new Thread(new ProxySerializeTask()).start();
+//        new Thread(new ProxySerializeTask()).start();
     }
     public ThreadPoolExecutor getProxyTestThreadExecutor() {
         return proxyTestThreadExecutor;
