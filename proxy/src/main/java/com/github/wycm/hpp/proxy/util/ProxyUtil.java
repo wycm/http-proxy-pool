@@ -21,7 +21,7 @@ public class ProxyUtil {
      * 失败次数大于3，且失败率超过60%，丢弃
      */
     public static boolean isDiscardProxy(Proxy proxy){
-        if (proxy.getSuccessfulAverageTime() >= 5000){
+        if (proxy.getSuccessfulAverageTime() >= Integer.valueOf(Config.getProperty("httpTimeout"))){
             return true;
         }
         int succTimes = proxy.getSuccessfulTimes();

@@ -7,6 +7,7 @@ import com.github.wycm.hpp.proxy.ProxyHttpClient;
 import com.github.wycm.hpp.proxy.ProxyPool;
 import com.github.wycm.hpp.proxy.entity.Direct;
 import com.github.wycm.hpp.proxy.site.ProxyListPageParserFactory;
+import com.github.wycm.hpp.proxy.util.Config;
 import com.github.wycm.hpp.proxy.util.Constants;
 import com.github.wycm.hpp.http.util.HttpClientUtil;
 import org.apache.http.HttpHost;
@@ -26,7 +27,7 @@ import static com.github.wycm.hpp.proxy.util.Constants.PROXY_TEST_URL;
  * 若下载失败，通过代理去下载代理网页
  */
 public class ProxyPageTask implements Runnable{
-	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ProxySerializeTask.class);
+	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(ProxyPageTask.class);
 
 	protected String url;
 	private boolean proxyFlag;//是否通过代理下载
@@ -49,6 +50,13 @@ public class ProxyPageTask implements Runnable{
 		this.pageCharset = pageCharset;
 	}
 	public void run(){
+		int size = ProxyPool.proxyQueue.size();
+		int count = Integer.valueOf(Config.getProperty("proxyNumberThreshold"));
+		if (size >= 10){
+			logger.info("当前可用代理{}个,暂时不下载代理页面", size);
+			return;
+
+		}
 		long requestStartTime = System.currentTimeMillis();
 		HttpGet tempRequest = null;
 		try {
@@ -73,7 +81,7 @@ public class ProxyPageTask implements Runnable{
 				logger.debug(logStr);
 				handle(page);
 			} else {
-				logger.error(logStr);
+				logger.debug(logStr);
 				Thread.sleep(100);
 				retry();
 			}

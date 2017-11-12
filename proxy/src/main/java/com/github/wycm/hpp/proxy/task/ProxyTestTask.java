@@ -31,6 +31,12 @@ public class ProxyTestTask implements Runnable{
     }
     @Override
     public void run() {
+        int size = ProxyPool.proxyQueue.size();
+        int count = Integer.valueOf(Config.getProperty("proxyNumberThreshold"));
+        if (size >= 10){
+            logger.info("当前可用代理{}个,暂时不下载代理页面", size);
+            return;
+        }
         long startTime = System.currentTimeMillis();
         HttpGet request = null;
         if (!proxy.getAnonymous().contains("匿")){
@@ -62,11 +68,11 @@ public class ProxyTestTask implements Runnable{
             request.releaseConnection();
             proxy.setResponseTime(endTime - startTime);
             logger.debug(proxy.toString() + "---------" + page.toString());
-            if(!ProxyPool.proxySet.contains(proxy)
-                    && proxy.getAnonymous().contains("匿")//匿名
-                    && proxy.getResponseTime() >= 5000//超过5s丢弃
+            if(!(ProxyPool.proxySet.contains(proxy)
+                    || !proxy.getAnonymous().contains("匿")//匿名
+                    || proxy.getResponseTime() >= Integer.valueOf(Config.getProperty("httpTimeout")))//超过5s丢弃
                     ){
-                logger.debug(proxy.toString() + "----------代理可用--------请求耗时:" + (endTime - startTime) + "ms");
+                logger.info(proxy.toString() + "----------代理可用--------请求耗时:" + (endTime - startTime) + "ms");
                 ProxyPool.lock.writeLock().lock();
                 try {
                     proxy.setLastSuccessfulTime(System.currentTimeMillis());

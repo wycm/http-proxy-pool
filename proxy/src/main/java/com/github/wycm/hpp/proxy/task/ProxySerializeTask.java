@@ -1,5 +1,6 @@
 package com.github.wycm.hpp.proxy.task;
 
+import com.alibaba.fastjson.JSON;
 import com.github.wycm.hpp.proxy.ProxyPool;
 import com.github.wycm.hpp.proxy.entity.Proxy;
 import com.github.wycm.hpp.proxy.util.Config;
@@ -39,6 +40,7 @@ public class ProxySerializeTask implements Runnable{
                 e.printStackTrace();
             }
             logger.info("成功序列化" + proxyArray.length + "个代理");
+            logger.info(JSON.toJSONString(proxyArray));
             try {
                 Thread.sleep(1000 * 60 * 1);
             } catch (InterruptedException e) {
