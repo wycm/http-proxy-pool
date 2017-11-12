@@ -8,6 +8,7 @@ import com.github.wycm.hpp.proxy.site.mimiip.MimiipProxyListPageParser;
 import com.github.wycm.hpp.proxy.entity.Direct;
 import com.github.wycm.hpp.proxy.site.ip181.Ip181ProxyListPageParser;
 import com.github.wycm.hpp.proxy.site.xicidaili.XicidailiProxyListPageParser;
+import com.github.wycm.hpp.proxy.util.Config;
 
 import java.util.*;
 import java.util.concurrent.DelayQueue;
@@ -31,7 +32,7 @@ public class ProxyPool {
     public final static Map<String, Class> proxyMap = new HashMap<>();
     public final static List<DefaultParserTemplate> defalutParserTemplateList = new ArrayList<>();
     static {
-        int pages = 3;
+        int pages = Integer.valueOf(Config.getProperty("proxyPages"));
         DefaultParserTemplate xiciTemplate = new DefaultParserTemplate();
         xiciTemplate.setDomain("xicidaili.com");
         defalutParserTemplateList.add(xiciTemplate);

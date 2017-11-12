@@ -168,7 +168,8 @@ public class ProxyHttpClient extends AbstractHttpClient {
                         }
                     }
                     try {
-                        Thread.sleep(1000 * 60 * 60);
+                        int proxyPageDownloadInterval = Integer.valueOf(Config.getProperty("proxyPageDownloadInterval"));
+                        Thread.sleep(1000 * 60 * proxyPageDownloadInterval);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
