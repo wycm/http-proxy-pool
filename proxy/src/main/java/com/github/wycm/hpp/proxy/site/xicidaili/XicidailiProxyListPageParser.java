@@ -31,6 +31,10 @@ public class XicidailiProxyListPageParser implements ListPageParser<Proxy> {
             proxy.setLocation(location);
             proxy.setAnonymous(anonymous);
             proxy.setType(type);
+            if(!anonymous.contains("匿")){
+                //只要匿名代理
+                continue;
+            }
             proxyList.add(proxy);
         }
         return proxyList;

@@ -31,7 +31,7 @@ public class ProxyPool {
     public final static Map<String, Class> proxyMap = new HashMap<>();
     public final static List<DefaultParserTemplate> defalutParserTemplateList = new ArrayList<>();
     static {
-        int pages = 8;
+        int pages = 3;
         DefaultParserTemplate xiciTemplate = new DefaultParserTemplate();
         xiciTemplate.setDomain("xicidaili.com");
         defalutParserTemplateList.add(xiciTemplate);

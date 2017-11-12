@@ -32,6 +32,10 @@ public class Ip66ProxyListPageParser implements ListPageParser<Proxy> {
             proxy.setPort(Integer.valueOf(port));
             proxy.setLocation(location);
             proxy.setAnonymous(anonymous);
+            if(!anonymous.contains("匿")){
+                //只要匿明代理
+                continue;
+            }
             proxyList.add(proxy);
         }
         return proxyList;
