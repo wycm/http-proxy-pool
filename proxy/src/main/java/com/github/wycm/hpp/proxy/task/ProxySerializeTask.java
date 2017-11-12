@@ -22,11 +22,13 @@ public class ProxySerializeTask implements Runnable{
             Proxy[] proxyArray = null;
             ProxyPool.lock.readLock().lock();
             try {
-                proxyArray = new Proxy[ProxyPool.proxySet.size()];
+                proxyArray = new Proxy[ProxyPool.proxyQueue.size()];
                 int i = 0;
-                for (Proxy p : ProxyPool.proxySet){
-                    if (!ProxyUtil.isDiscardProxy(p)){
-                        proxyArray[i++] = p;
+                Object[] proxies = ProxyPool.proxyQueue.toArray();
+                for (Object p : proxies){
+                    Proxy proxy = (Proxy) p;
+                    if (!ProxyUtil.isDiscardProxy(proxy)){
+                        proxyArray[i++] = proxy;
                     }
                 }
             } finally {
@@ -42,7 +44,7 @@ public class ProxySerializeTask implements Runnable{
             logger.info("成功序列化" + proxyArray.length + "个代理");
             logger.info(JSON.toJSONString(proxyArray));
             try {
-                Thread.sleep(1000 * 60 * 1);
+                Thread.sleep(1000 * 60 * 5);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
