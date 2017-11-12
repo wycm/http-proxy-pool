@@ -35,16 +35,15 @@ public class ProxySerializeTask implements Runnable{
                 ProxyPool.lock.readLock().unlock();
             }
 
-//            HttpClientUtil.serializeObject(proxyArray, Config.getProperty("proxyPath"));
-            try {
-                ProxyUtil.serializeProxy(proxyArray, Config.getProperty("proxyPath"));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            logger.info("成功序列化" + proxyArray.length + "个代理");
+//            try {
+//                ProxyUtil.serializeProxy(proxyArray, Config.getProperty("proxyPath"));
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+            logger.info("当前可用" + proxyArray.length + "个代理");
             logger.info(JSON.toJSONString(proxyArray));
             try {
-                Thread.sleep(1000 * 60 * 5);
+                Thread.sleep(1000 * 60 * 10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
