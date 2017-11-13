@@ -53,7 +53,7 @@ public class ProxyPageTask implements Runnable{
 		int size = ProxyPool.proxyQueue.size();
 		int count = Integer.valueOf(Config.getProperty("proxyNumberThreshold"));
 		if (size >= count){
-			logger.info("当前可用代理{}个,暂时不下载代理页面", size);
+			logger.debug("当前可用代理{}个,暂时不下载代理页面", size);
 			return;
 
 		}
