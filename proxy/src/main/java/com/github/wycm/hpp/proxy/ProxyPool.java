@@ -78,7 +78,7 @@ public class ProxyPool {
                 _66ipTemplate.getUrlList().add("http://www.66ip.cn/areaindex_" + j + "/" + i + ".html");
             }
         }
-        proxyQueue.add(new Direct(TIME_INTERVAL));
+//        proxyQueue.add(new Direct(TIME_INTERVAL));
     }
 
 }
